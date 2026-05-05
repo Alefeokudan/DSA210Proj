@@ -115,7 +115,7 @@ The second project milestone applies regression models to predict the Turkey-spe
 - Target: `steam_trends_z` (z-scored Google Trends `geo='TR'` for `cs2 / counter strike / steam`).
 - Features (10 total): `usdtry_z`, `bist100_z`, `stress_index_z`, `steam_players_z`, `usdtry_lag1`, `usdtry_lag2`, `usdtry_roll3`, `time_index`, `crisis_period`, `usdtry × crisis` interaction.
 - Train / test: 28-month training set + **6-month chronological holdout** (2025-07 → 2025-12).
-- Cross-validation on training: 5-fold `TimeSeriesSplit` (walk-forward, no leakage). Scaling refit per fold inside `sklearn.Pipeline`.
+- Cross-validation on training: 5-fold `TimeSeriesSplit` (walk-forward chronological validation). Scaling for the learned models is refit per fold inside `sklearn.Pipeline`.
 
 **Models compared**
 - Baselines: mean, naïve persistence (`ŷ_t = y_{t-1}`), univariate OLS on `usdtry_z`.
@@ -136,10 +136,12 @@ The second project milestone applies regression models to predict the Turkey-spe
 | Linear (no reg.)     | 1.775    | 7.44                    | −6.61 |
 
 **Takeaways**
-- **ElasticNet wins** and beats persistence by ~20% on RMSE — the project's central ML claim.
+- **ElasticNet gives the best score in this submitted run** and beats persistence by ~20% on RMSE.
 - Regularised linear models > tree models > unregularised linear, exactly as expected for n ≈ 28 training rows with 10 features.
-- Permutation importance on the holdout confirms `usdtry_z` and its lags carry the most predictive signal; `stress_index_z` is near zero, consistent with EDA H3 being unsupported.
+- Permutation importance on the holdout suggests `usdtry_z` and its lags carry the most predictive signal; `stress_index_z` is near zero, consistent with EDA H3 being unsupported.
 - Generated figures (in `ML/`): `fig_ml_cv_split.png`, `fig_ml_model_comparison.png`, `fig_ml_pred_vs_actual.png`, `fig_ml_residuals.png`, `fig_ml_coefficients.png`, `fig_ml_importance.png`, `fig_ml_perm_importance.png`.
+
+**Important limitation:** the `_z` columns and `crisis_period` flag were created during the earlier data-processing stage using the full 2023–2025 dataset. For this class milestone, I keep them for consistency with the EDA, but a stricter forecasting version should recompute normalisation statistics and the crisis threshold using only the training period.
 
 A simpler intro-to-ML companion notebook (`ML/ML_Project/ml_implementation.ipynb`) is also included for transparency, alongside its short stand-alone report (`ML/ML_Project/REPORT.md`).
 

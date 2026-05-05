@@ -71,9 +71,9 @@ The table below lists each task and who did it.
   training when using TimeSeriesSplit?"* — produced a `Pipeline` snippet that I
   adapted to my variable names.
 - *"My RMSE looks suspiciously low; could it be label leakage?"* — checked my
-  feature list together; concluded the issue was that `steam_players_z` was
-  globally z-scored before the split (acceptable for this assignment, noted in
-  Limitations).
+  feature list together; noticed that the `_z` columns were globally computed
+  before the split. I kept them for consistency with the EDA, but documented
+  this as a limitation and future improvement.
 - *"How do I display feature importance for both linear and tree models in one
   bar chart?"* — produced a matplotlib template I then re-styled.
 - Spotting typos in markdown tables and inconsistent column ordering.

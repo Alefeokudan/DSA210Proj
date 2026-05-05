@@ -122,8 +122,9 @@ when n is small.
 **USD/TRY drives the prediction.** Across all three models, USD/TRY is the
 dominant feature. The linear coefficient (+1.31) says that a one-standard-
 deviation increase in the lira's weakening corresponds to roughly +1.3
-standard deviations of extra gaming interest — large effect. This **confirms
-Hypothesis 1** from the EDA in a predictive (not just correlational) sense.
+standard deviations of extra gaming interest — large effect. This **supports
+Hypothesis 1** from the EDA in a predictive setting, although the small sample
+means the result should still be interpreted cautiously.
 
 **Why is R² only 0.047 even for the best model?** R² close to zero means the
 linear model is only slightly better than predicting the average over the test
@@ -149,10 +150,14 @@ already has the continuous USD/TRY value, the binary version is redundant.
 2. **Single holdout.** A 6-month block is one realisation; a different test
    window could give different numbers. Time-series cross-validation would be
    more robust.
-3. **Only contemporaneous features.** No lags, no rolling means, no calendar
+3. **Precomputed normalisation.** The z-score columns and crisis flag were
+   created in the earlier processing stage using the full 2023-2025 dataset.
+   This keeps the ML stage consistent with the EDA, but a stricter forecasting
+   version should recompute these values from the training period only.
+4. **Only contemporaneous features.** No lags, no rolling means, no calendar
    effects. The model can't learn that gaming reacts a month or two *after*
    a currency shock.
-4. **`steam_trends` is a proxy for player count.** Steam does not publish
+5. **`steam_trends` is a proxy for player count.** Steam does not publish
    country-level player counts, so we use TR Google-Trends interest in
    "steam" as the closest available signal.
 
@@ -163,9 +168,10 @@ already has the continuous USD/TRY value, the binary version is redundant.
 A simple Linear Regression on four macroeconomic features predicts Turkish
 gaming interest on a 6-month holdout with RMSE = 0.628 and a positive R²
 (0.047), beating both a regularised Ridge and a Random Forest. The positive
-USD/TRY coefficient confirms the EDA finding — **when the lira weakens, gaming
-interest in Turkey rises** — now demonstrated in a leakage-free, predictive
-setting.
+USD/TRY coefficient is consistent with the EDA finding: **when the lira
+weakens, gaming interest in Turkey tends to rise**. Because this is a small
+class project with only 36 monthly rows, the result is best read as supportive
+evidence rather than a final forecasting model.
 
 ---
 
