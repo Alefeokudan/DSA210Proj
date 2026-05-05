@@ -1,0 +1,4 @@
+,RMSE,MAE,R2
+Linear Regression,0.628,0.501,0.047
+Ridge (alpha=1.0),0.666,0.522,-0.071
+Random Forest,0.849,0.667,-0.74

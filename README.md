@@ -40,17 +40,30 @@ This project investigates the **digital escapism hypothesis**: do individuals in
 
 ```
 DSA210Proj/
-├── data_collection.py          # Downloads all raw data
-├── data_processing.py          # Merges, cleans, and normalises data
+├── data_collection.py            # Downloads all raw data
+├── data_processing.py            # Merges, cleans, and normalises data
 ├── 34314_AliEfeOkudan_EDA.ipynb  # Full EDA and hypothesis testing notebook
-├── requirements.txt            # Python dependencies
-├── merged_dataset.csv          # Final 36-month unified dataset
-├── steamdb_chart_730.csv       # Raw CS2 SteamDB data
-├── usdtry_2023_2025.csv        # Raw USD/TRY data
-├── bist100_2023_2025.csv       # Raw BIST100 data
-├── google_trends_TR.csv        # Raw Google Trends data (TR)
-├── steam_cs2_clean.csv         # Cleaned Steam data (2023–2025 window)
-└── fig_*.png                   # EDA and hypothesis test figures
+├── requirements.txt              # Python dependencies
+├── merged_dataset.csv            # Final 36-month unified dataset
+├── steamdb_chart_730.csv         # Raw CS2 SteamDB data
+├── usdtry_2023_2025.csv          # Raw USD/TRY data
+├── bist100_2023_2025.csv         # Raw BIST100 data
+├── google_trends_TR.csv          # Raw Google Trends data (TR)
+├── steam_cs2_clean.csv           # Cleaned Steam data (2023–2025 window)
+├── fig_*.png                     # EDA and hypothesis test figures
+└── ML/                           # All ML-stage deliverables
+    ├── 34314_AliEfeOkudan_ML.ipynb   # Advanced regression notebook
+    ├── 34314_AliEfeOkudan_ML.html    # HTML export of the above
+    ├── ml_features.csv               # Engineered feature matrix
+    ├── fig_ml_*.png                  # ML figures (CV split, residuals, importance, …)
+    ├── AI_USAGE.md                   # AI-assistance disclosure for ML stage
+    └── ML_Project/                   # Beginner-style intro-to-ML version
+        ├── ml_implementation.ipynb
+        ├── build_notebook.py
+        ├── REPORT.md
+        ├── results.csv
+        ├── predictions_vs_actual.png
+        └── feature_importance.png
 ```
 
 ---
@@ -94,6 +107,49 @@ H1 and H2 support the digital escapism hypothesis: as Turkey's currency deprecia
 
 ---
 
+## ML Methods (`ML/34314_AliEfeOkudan_ML.ipynb`)
+
+The second project milestone applies regression models to predict the Turkey-specific gaming proxy (`steam_trends_z`) from macro-economic features.
+
+**Setup**
+- Target: `steam_trends_z` (z-scored Google Trends `geo='TR'` for `cs2 / counter strike / steam`).
+- Features (10 total): `usdtry_z`, `bist100_z`, `stress_index_z`, `steam_players_z`, `usdtry_lag1`, `usdtry_lag2`, `usdtry_roll3`, `time_index`, `crisis_period`, `usdtry × crisis` interaction.
+- Train / test: 28-month training set + **6-month chronological holdout** (2025-07 → 2025-12).
+- Cross-validation on training: 5-fold `TimeSeriesSplit` (walk-forward, no leakage). Scaling refit per fold inside `sklearn.Pipeline`.
+
+**Models compared**
+- Baselines: mean, naïve persistence (`ŷ_t = y_{t-1}`), univariate OLS on `usdtry_z`.
+- Learned: Linear Regression, **Ridge**, **Lasso**, **ElasticNet** (all with `alpha` grid-searched), Random Forest, XGBoost (depth grid-searched).
+
+**Holdout results (sorted by RMSE)**
+
+| Model                | RMSE (z) | MAE (raw search-volume) | R²    |
+|----------------------|---------:|------------------------:|------:|
+| **ElasticNet**       | 0.568    | 2.05                    | 0.222 |
+| Lasso                | 0.598    | 2.01                    | 0.137 |
+| Ridge                | 0.608    | 2.07                    | 0.108 |
+| OLS (usdtry only)    | 0.608    | 2.18                    | 0.107 |
+| Persistence baseline | 0.711    | 2.71                    | −0.22 |
+| XGBoost              | 0.736    | 2.49                    | −0.31 |
+| Random Forest        | 0.754    | 2.62                    | −0.37 |
+| Mean baseline        | 1.220    | 4.51                    | −2.59 |
+| Linear (no reg.)     | 1.775    | 7.44                    | −6.61 |
+
+**Takeaways**
+- **ElasticNet wins** and beats persistence by ~20% on RMSE — the project's central ML claim.
+- Regularised linear models > tree models > unregularised linear, exactly as expected for n ≈ 28 training rows with 10 features.
+- Permutation importance on the holdout confirms `usdtry_z` and its lags carry the most predictive signal; `stress_index_z` is near zero, consistent with EDA H3 being unsupported.
+- Generated figures (in `ML/`): `fig_ml_cv_split.png`, `fig_ml_model_comparison.png`, `fig_ml_pred_vs_actual.png`, `fig_ml_residuals.png`, `fig_ml_coefficients.png`, `fig_ml_importance.png`, `fig_ml_perm_importance.png`.
+
+A simpler intro-to-ML companion notebook (`ML/ML_Project/ml_implementation.ipynb`) is also included for transparency, alongside its short stand-alone report (`ML/ML_Project/REPORT.md`).
+
+---
+
 ## AI Usage
 
-AI assistance (Claude Sonnet 4.6) was used during this project. All prompts, outputs, and modifications are documented in the **AI Usage Log** section of `34314_AliEfeOkudan_EDA.ipynb`, as required by DSA210 academic integrity guidelines.
+AI assistance was used during this project as a coding-support tool. Disclosure for each stage:
+
+- **EDA stage:** see the *AI Usage Log* section inside `34314_AliEfeOkudan_EDA.ipynb`.
+- **ML stage:** see [`ML/AI_USAGE.md`](ML/AI_USAGE.md) for a detailed, task-by-task breakdown.
+
+All research questions, hypotheses, modelling decisions, and conclusions are the author's. AI suggestions were reviewed and verified before being kept.
