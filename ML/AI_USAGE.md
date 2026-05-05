@@ -95,6 +95,18 @@ applicable, so results are deterministic.
 
 ---
 
+## Note on this document
+
+For full transparency: the first draft of this `AI_USAGE.md` itself was
+produced with the same AI assistant (Claude). I read it line by line, edited
+the wording where it did not match what actually happened, removed claims I
+could not personally verify, and kept only the parts that I would stand
+behind in person. The structure (headings, table layout) is the AI's
+suggestion; the content of every entry — who did what, what AI did *not*
+do, the verification steps — is mine.
+
+---
+
 *This disclosure is provided in good faith and follows the spirit of the
 DSA210 AI-use policy. Any further questions about how a specific cell or
 result was produced can be answered by reference to the corresponding
