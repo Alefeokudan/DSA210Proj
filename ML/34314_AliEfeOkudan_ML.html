@@ -8718,42 +8718,6 @@ dtype: float64</pre>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=baa9fc94">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="9-%C2%B7-AI-usage-log-(DSA210-academic-integrity-requirement)">9 · AI usage log (DSA210 academic-integrity requirement)<a class="anchor-link" href="#9-%C2%B7-AI-usage-log-(DSA210-academic-integrity-requirement)">¶</a></h2><table>
-<thead>
-<tr>
-<th>Step</th>
-<th>Tool</th>
-<th>Prompt (summary)</th>
-<th>How the output was used</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Plan</td>
-<td>Claude Sonnet 4.6 (Claude Code)</td>
-<td><em>"DSA210 ML stage: examine project, draft a regression plan against <code>steam_trends_z</code> with TimeSeriesSplit + holdout."</em></td>
-<td>Produced the section structure of this notebook (problem framing, feature engineering, CV strategy, baselines, model menu, interpretation). I reviewed the plan, kept Ridge/Lasso/RF/XGB, dropped deep-learning and classification for n = 36 reasons, and approved before any code ran.</td>
-</tr>
-<tr>
-<td>Code skeleton</td>
-<td>Claude Sonnet 4.6</td>
-<td><em>"Generate the cells: feature matrix with lags+rolling, walk-forward CV, GridSearchCV pipelines, holdout evaluation, residuals, permutation importance."</em></td>
-<td>Used the generated code mostly as-is. I verified the train/test ordering assertions, replaced any <code>sklearn.metrics</code> API that failed locally, and confirmed each figure saved to disk.</td>
-</tr>
-</tbody>
-</table>
-<p>| Discussion text | Claude Sonnet 4.6 | <em>"Write a discussion section linking ML results back to EDA hypotheses H1/H2/H3, with limitations."</em> | Reviewed every claim against my own EDA numbers and edited where the AI overstated effects. The "ethical note" sentence is mine.</p>
-<p>All other interpretation, the choice of features, the holdout length, and the verification protocol were decided by me. No AI output is included in this notebook without my review.</p>
-</div>
-</div>
-</div>
-</div>
 </main>
 </body>
 </html>
