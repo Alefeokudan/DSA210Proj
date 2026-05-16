@@ -5,6 +5,12 @@
 **University:** Sabancı University
 **Course:** DSA210 – Introduction to Data Science, Spring 2026
 
+> **Final submission (18 May 2026):** The consolidated final report,
+> figures, and analysis-ready data snapshots live in
+> [`Final/`](Final/). Start with
+> [`Final/FINAL_REPORT.md`](Final/FINAL_REPORT.md). AI-usage disclosure
+> for this stage: [`Final/AI_USAGE_FINAL.md`](Final/AI_USAGE_FINAL.md).
+
 ---
 
 ## Motivation
@@ -51,19 +57,25 @@ DSA210Proj/
 ├── google_trends_TR.csv          # Raw Google Trends data (TR)
 ├── steam_cs2_clean.csv           # Cleaned Steam data (2023–2025 window)
 ├── fig_*.png                     # EDA and hypothesis test figures
-└── ML/                           # All ML-stage deliverables
-    ├── 34314_AliEfeOkudan_ML.ipynb   # Advanced regression notebook
-    ├── 34314_AliEfeOkudan_ML.html    # HTML export of the above
-    ├── ml_features.csv               # Engineered feature matrix
-    ├── fig_ml_*.png                  # ML figures (CV split, residuals, importance, …)
-    ├── AI_USAGE.md                   # AI-assistance disclosure for ML stage
-    └── ML_Project/                   # Beginner-style intro-to-ML version
-        ├── ml_implementation.ipynb
-        ├── build_notebook.py
-        ├── REPORT.md
-        ├── results.csv
-        ├── predictions_vs_actual.png
-        └── feature_importance.png
+├── ML/                           # All ML-stage deliverables
+│   ├── 34314_AliEfeOkudan_ML.ipynb   # Advanced regression notebook
+│   ├── 34314_AliEfeOkudan_ML.html    # HTML export of the above
+│   ├── ml_features.csv               # Engineered feature matrix
+│   ├── fig_ml_*.png                  # ML figures (CV split, residuals, importance, …)
+│   ├── AI_USAGE.md                   # AI-assistance disclosure for ML stage
+│   └── ML_Project/                   # Beginner-style intro-to-ML version
+│       ├── ml_implementation.ipynb
+│       ├── build_notebook.py
+│       ├── REPORT.md
+│       ├── results.csv
+│       ├── predictions_vs_actual.png
+│       └── feature_importance.png
+│
+└── Final/                        # Final submission (18 May milestone)
+    ├── FINAL_REPORT.md               # Consolidated final report
+    ├── AI_USAGE_FINAL.md             # AI disclosure for the final stage
+    ├── figures/                      # Report-embedded copies of all figures
+    └── data/                         # Snapshot of analysis-ready CSVs
 ```
 
 ---
@@ -87,11 +99,17 @@ python data_processing.py
 ```
 Resamples all series to monthly frequency, fills missing values, adds z-score normalisation and crisis period flag. Output: `merged_dataset.csv`.
 
-**4. Run the notebook**
+**4. Run the EDA notebook**
 ```bash
 jupyter notebook 34314_AliEfeOkudan_EDA.ipynb
 ```
 Run all cells. The notebook produces all EDA visualisations and hypothesis test results.
+
+**5. Run the ML notebook**
+```bash
+jupyter notebook ML/34314_AliEfeOkudan_ML.ipynb
+```
+Trains the regularised linear / tree models and reproduces all numbers in the holdout table below as well as the `fig_ml_*.png` figures.
 
 ---
 
@@ -153,5 +171,6 @@ AI assistance was used during this project as a coding-support tool. Disclosure 
 
 - **EDA stage:** see the *AI Usage Log* section inside `34314_AliEfeOkudan_EDA.ipynb`.
 - **ML stage:** see [`ML/AI_USAGE.md`](ML/AI_USAGE.md) for a detailed, task-by-task breakdown.
+- **Final-report stage:** see [`Final/AI_USAGE_FINAL.md`](Final/AI_USAGE_FINAL.md) for the disclosure covering this submission.
 
 All research questions, hypotheses, modelling decisions, and conclusions are the author's. AI suggestions were reviewed and verified before being kept.
