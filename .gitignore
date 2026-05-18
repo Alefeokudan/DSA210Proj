@@ -23,3 +23,7 @@ env/
 
 # Jupyter
 .ipynb_checkpoints
+
+# Course materials (not project deliverables)
+DSA210_Spring2026_ProjectGuidelines.docx
+DSA210_Yarilacaklar_15Nisan.pdf

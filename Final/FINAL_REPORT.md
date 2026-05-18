@@ -203,6 +203,7 @@ Three preregistered hypotheses, tested on the monthly merged dataset.
 ## 6. Machine Learning Stage
 
 Full notebook: `ML/34314_AliEfeOkudan_ML.ipynb`.
+Static HTML copy (no need to re-execute): `Final/34314_AliEfeOkudan_ML.html`.
 Simpler companion notebook: `ML/ML_Project/ml_implementation.ipynb`.
 
 ### 6.1 Setup
@@ -417,7 +418,9 @@ DSA210Proj/
 │
 └── Final/                               # milestone 4 (this submission)
     ├── FINAL_REPORT.md                  # ← you are here
+    ├── FINAL_REPORT.pdf                  # PDF export of this report
     ├── AI_USAGE_FINAL.md                # AI disclosure for the final stage
+    ├── 34314_AliEfeOkudan_ML.html       # static HTML export of the ML notebook
     ├── figures/                         # report-embedded copies of all figures
     │   ├── fig_*.png                    # EDA figures
     │   └── fig_ml_*.png                 # ML figures
